@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Sistema de Recomendação - Integração de Bases</title>
+    <link rel="stylesheet" href="/static/style.css">
+</head>
+<body>
+    <div class="container">
+        <header>
+            <h1>🛍️ Sistema de Recomendação de Compras</h1>
+            <p class="subtitle">Integração de Bases de Dados</p>
+        </header>
+
+        <div class="sync-section">
+            <button id="syncBtn" class="sync-button" onclick="sincronizarDados()">
+                🔄 Sincronizar/Atualizar Bases
+            </button>
+            <div id="syncStatus" class="status-message"></div>
+        </div>
+
+        <div class="tabs">
+            <button class="tab-button active" onclick="abrirAba(event, 'clientes')">Clientes</button>
+            <button class="tab-button" onclick="abrirAba(event, 'amigos')">Amigos</button>
+            <button class="tab-button" onclick="abrirAba(event, 'compras')">Compras</button>
+            <button class="tab-button" onclick="abrirAba(event, 'recomendacoes')">Recomendações</button>
+        </div>
+
+        <!-- Aba: Clientes -->
+        <div id="clientes" class="tab-content active">
+            <h2>Lista de Clientes</h2>
+            <div id="clientesContent" class="content-area">
+                <p class="loading">Carregando clientes...</p>
+            </div>
+        </div>
+
+        <!-- Aba: Amigos -->
+        <div id="amigos" class="tab-content">
+            <h2>Rede de Amizades</h2>
+            <div id="amigosContent" class="content-area">
+                <p class="loading">Carregando rede de amizades...</p>
+            </div>
+        </div>
+
+        <!-- Aba: Compras -->
+        <div id="compras" class="tab-content">
+            <h2>Histórico de Compras</h2>
+            <div id="comprasContent" class="content-area">
+                <p class="loading">Carregando compras...</p>
+            </div>
+        </div>
+
+        <!-- Aba: Recomendações -->
+        <div id="recomendacoes" class="tab-content">
+            <h2>Recomendações Personalizadas</h2>
+            <div id="recomendacoesContent" class="content-area">
+                <p class="loading">Carregando recomendações...</p>
+            </div>
+        </div>
+    </div>
+
+    <script src="/static/script.js"></script>
+</body>
+</html>
+
