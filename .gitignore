@@ -1,0 +1,72 @@
+# Ambiente virtual Python
+venv/
+env/
+ENV/
+.venv
+venv.bak/
+
+# Python
+__pycache__/
+*.py[cod]
+*$py.class
+*.so
+.Python
+build/
+develop-eggs/
+dist/
+downloads/
+eggs/
+.eggs/
+lib/
+lib64/
+parts/
+sdist/
+var/
+wheels/
+*.egg-info/
+.installed.cfg
+*.egg
+MANIFEST
+
+# IDEs
+.vscode/
+.idea/
+*.swp
+*.swo
+*~
+.project
+.pydevproject
+.settings/
+
+# OS
+.DS_Store
+Thumbs.db
+desktop.ini
+
+# Arquivos de ambiente
+.env
+.env.local
+.env.*.local
+
+# Logs
+*.log
+logs/
+*.log.*
+
+# Arquivos temporários
+*.tmp
+*.temp
+.cache/
+
+# Docker
+.dockerignore
+
+# Banco de dados local (se houver arquivos locais)
+*.db
+*.sqlite
+*.sqlite3
+
+# Arquivos de backup
+*.bak
+*.backup
+*~
