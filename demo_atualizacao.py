@@ -391,9 +391,8 @@ def main():
     print("\nEste script demonstra:")
     print("  1. Alteração de dados nos bancos originais (PostgreSQL, MongoDB, Neo4j)")
     print("  2. Verificação de que o Redis está desatualizado")
-    print("  3. Sincronização via API (limpa e recria dados no Redis)")
-    print("  4. Verificação de que o Redis foi atualizado")
-    print("  5. Consulta dos dados atualizados via API")
+    print("  3. Uso do front-end para sincronizar/atualizar bases (não feito por aqui)")
+    print("  4. Consulta dos dados atualizados via front-end")
     
     input("\nPressione ENTER para começar a demonstração...")
     
@@ -420,38 +419,19 @@ def main():
         # Passo 4: Verificar Redis (deve estar desatualizado)
         verificar_redis_antes(cliente_id)
         
-        input("\nPressione ENTER para sincronizar via API...")
-        
-        # Passo 5: Sincronizar via API
-        sucesso = sincronizar_via_api()
-        
-        if not sucesso:
-            print("\n[AVISO] Não foi possível sincronizar. Verifique se a API está rodando.")
-            return 1
-        
-        input("\nPressione ENTER para verificar o Redis atualizado...")
-        
-        # Passo 6: Verificar Redis (deve estar atualizado)
-        verificar_redis_depois(cliente_id)
-        
-        input("\nPressione ENTER para consultar via API...")
-        
-        # Passo 7: Demonstrar consulta via API
-        demonstrar_consulta_api()
+        print_subsection("SINCRONIZAÇÃO VIA FRONT-END")
+        print("\n  Agora use o botão 'Sincronizar/Atualizar Bases' no front-end.")
+        print("  Este script não chama mais a API para atualizar o Redis.")
+        print("  Após a sincronização pelo front, consulte os dados atualizados por lá.")
+        input("\nPressione ENTER quando finalizar a sincronização no front-end...")
         
         print_separator("DEMONSTRAÇÃO CONCLUÍDA")
         print("\n[OK] Resumo da demonstração:")
         print("  - Dados foram alterados nos bancos originais")
         print("  - Redis estava desatualizado")
-        print("  - API sincronizou e atualizou o Redis")
-        print("  - Dados atualizados estão disponíveis via API")
-        print("\nPara a apresentação:")
-        print("  - Mostre as alterações nos bancos originais")
-        print("  - Demonstre que o Redis precisa ser atualizado")
-        print("  - Execute a sincronização via API")
-        print("  - Mostre os dados atualizados no Redis")
-        print("  - Consulte via API para mostrar que tudo funciona")
-        
+        print("  - Sincronização deve ser feita pelo front-end (botão 'Sincronizar/Atualizar Bases')")
+        print("  - Dados atualizados podem ser consultados pelo front-end")
+
     except Exception as e:
         print(f"\n[ERRO] Erro durante a demonstração: {e}")
         import traceback
