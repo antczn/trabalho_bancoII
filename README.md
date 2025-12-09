@@ -14,6 +14,7 @@ Este projeto configura a infraestrutura Docker para um sistema de recomendação
 - Docker e Docker Compose instalados
 - Python 3.8+ instalado
 
+
 ## Como Usar
 
 ### 1. Subir os serviços Docker
@@ -28,12 +29,23 @@ Isso irá iniciar os 4 bancos de dados em containers separados.
 
 Para evitar conflitos com o ambiente Python do sistema, use um ambiente virtual:
 
+Versão linux:
 ```bash
 # Criar ambiente virtual
 python3 -m venv venv
 
 # Ativar ambiente virtual
 source venv/bin/activate
+```
+
+Versão Windows (Powershell):
+```powershell
+python3 -m venv venv
+
+.\venv\Scripts\Activate.ps1
+
+# Se der erro de política de execução no PowerShell, execute primeiro:
+Set-ExecutionPolicy -ExecutionPolicy RemoteSigned -Scope CurrentUser
 ```
 
 ### 3. Instalar dependências Python

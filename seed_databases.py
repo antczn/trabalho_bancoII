@@ -1,8 +1,20 @@
 #!/usr/bin/env python3
+# -*- coding: utf-8 -*-
 """
 Script para popular os bancos de dados com dados fictícios consistentes.
 Mantém a integridade referencial entre PostgreSQL, MongoDB e Neo4j.
 """
+
+import os
+import sys
+# Garantir que o encoding padrão é UTF-8
+if sys.platform == 'win32':
+    os.environ['PYTHONIOENCODING'] = 'utf-8'
+    # Configurar stdout/stderr para UTF-8
+    if hasattr(sys.stdout, 'reconfigure'):
+        sys.stdout.reconfigure(encoding='utf-8')
+    if hasattr(sys.stderr, 'reconfigure'):
+        sys.stderr.reconfigure(encoding='utf-8')
 
 import psycopg2
 from psycopg2 import sql
@@ -161,12 +173,15 @@ def wait_for_services():
     # PostgreSQL
     for i in range(max_retries):
         try:
-            conn = psycopg2.connect(**POSTGRES_CONFIG)
+            config = POSTGRES_CONFIG.copy()
+            config['client_encoding'] = 'UTF8'
+            conn = psycopg2.connect(**config)
             conn.close()
             print("[OK] PostgreSQL pronto")
             break
-        except Exception:
+        except Exception as e:
             if i == max_retries - 1:
+                print(f"[ERRO] Não foi possível conectar ao PostgreSQL: {e}")
                 raise
             time.sleep(retry_delay)
     
@@ -182,8 +197,9 @@ def wait_for_services():
             client.close()
             print("[OK] MongoDB pronto")
             break
-        except Exception:
+        except Exception as e:
             if i == max_retries - 1:
+                print(f"[ERRO] Não foi possível conectar ao MongoDB: {e}")
                 raise
             time.sleep(retry_delay)
     
@@ -198,8 +214,9 @@ def wait_for_services():
             driver.close()
             print("[OK] Neo4j pronto")
             break
-        except Exception:
+        except Exception as e:
             if i == max_retries - 1:
+                print(f"[ERRO] Não foi possível conectar ao Neo4j: {e}")
                 raise
             time.sleep(retry_delay)
     
@@ -210,8 +227,9 @@ def wait_for_services():
             r.ping()
             print("[OK] Redis pronto")
             break
-        except Exception:
+        except Exception as e:
             if i == max_retries - 1:
+                print(f"[ERRO] Não foi possível conectar ao Redis: {e}")
                 raise
             time.sleep(retry_delay)
 
@@ -472,7 +490,9 @@ def main():
         
         # Conectar no PostgreSQL
         print("\n[PostgreSQL] Conectando...")
-        conn = psycopg2.connect(**POSTGRES_CONFIG)
+        config = POSTGRES_CONFIG.copy()
+        config['client_encoding'] = 'UTF8'
+        conn = psycopg2.connect(**config)
         print("[OK] Conectado")
         
         # Configurar e popular PostgreSQL

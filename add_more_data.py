@@ -1,8 +1,20 @@
 #!/usr/bin/env python3
+# -*- coding: utf-8 -*-
 """
 Script para adicionar mais 20 registros em cada banco de dados
 sem remover os dados existentes.
 """
+
+import os
+import sys
+# Garantir que o encoding padrão é UTF-8
+if sys.platform == 'win32':
+    os.environ['PYTHONIOENCODING'] = 'utf-8'
+    # Configurar stdout/stderr para UTF-8
+    if hasattr(sys.stdout, 'reconfigure'):
+        sys.stdout.reconfigure(encoding='utf-8')
+    if hasattr(sys.stderr, 'reconfigure'):
+        sys.stderr.reconfigure(encoding='utf-8')
 
 import psycopg2
 from pymongo import MongoClient
@@ -345,7 +357,9 @@ def main():
     try:
         # Conectar no PostgreSQL
         print("[PostgreSQL] Conectando...")
-        conn = psycopg2.connect(**POSTGRES_CONFIG)
+        config = POSTGRES_CONFIG.copy()
+        config['client_encoding'] = 'UTF8'
+        conn = psycopg2.connect(**config)
         print("[OK] Conectado")
         
         # Adicionar novos clientes

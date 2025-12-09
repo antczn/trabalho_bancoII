@@ -1,13 +1,26 @@
 #!/usr/bin/env python3
+# -*- coding: utf-8 -*-
 """
 API REST para integração de bases de dados.
 Consolida dados do PostgreSQL, MongoDB e Neo4j no Redis.
 """
 
+import os
+import sys
+from pathlib import Path
+
+# Garantir que o encoding padrão é UTF-8 no Windows
+if sys.platform == 'win32':
+    os.environ['PYTHONIOENCODING'] = 'utf-8'
+    # Configurar stdout/stderr para UTF-8
+    if hasattr(sys.stdout, 'reconfigure'):
+        sys.stdout.reconfigure(encoding='utf-8')
+    if hasattr(sys.stderr, 'reconfigure'):
+        sys.stderr.reconfigure(encoding='utf-8')
+
 from fastapi import FastAPI, HTTPException
 from fastapi.staticfiles import StaticFiles
 from fastapi.responses import HTMLResponse, FileResponse
-import os
 from pydantic import BaseModel
 from typing import List, Dict, Any, Optional
 import psycopg2
@@ -80,7 +93,9 @@ class RecomendacaoInfo(BaseModel):
 # Funções auxiliares de conexão
 def get_postgres_connection():
     """Retorna conexão com PostgreSQL."""
-    return psycopg2.connect(**POSTGRES_CONFIG)
+    config = POSTGRES_CONFIG.copy()
+    config['client_encoding'] = 'UTF8'
+    return psycopg2.connect(**config)
 
 def get_mongodb_client():
     """Retorna cliente MongoDB."""
@@ -106,8 +121,9 @@ def get_redis_client():
 async def root():
     """Serve a página HTML principal."""
     try:
-        if os.path.exists("static/index.html"):
-            return FileResponse("static/index.html")
+        static_path = Path("static/index.html")
+        if static_path.exists():
+            return FileResponse(str(static_path))
         else:
             return "<h1>Arquivo index.html não encontrado</h1>"
     except Exception as e:

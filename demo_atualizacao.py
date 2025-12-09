@@ -1,8 +1,20 @@
 #!/usr/bin/env python3
+# -*- coding: utf-8 -*-
 """
 Script de demonstração para apresentação do trabalho.
 Altera dados nos bancos originais e demonstra a atualização via API.
 """
+
+import os
+import sys
+# Garantir que o encoding padrão é UTF-8
+if sys.platform == 'win32':
+    os.environ['PYTHONIOENCODING'] = 'utf-8'
+    # Configurar stdout/stderr para UTF-8
+    if hasattr(sys.stdout, 'reconfigure'):
+        sys.stdout.reconfigure(encoding='utf-8')
+    if hasattr(sys.stderr, 'reconfigure'):
+        sys.stderr.reconfigure(encoding='utf-8')
 
 import psycopg2
 from pymongo import MongoClient
@@ -104,7 +116,9 @@ def alterar_dados_postgres():
     """Altera dados no PostgreSQL."""
     print_subsection("ALTERANDO DADOS NO POSTGRESQL")
     
-    conn = psycopg2.connect(**POSTGRES_CONFIG)
+    config = POSTGRES_CONFIG.copy()
+    config['client_encoding'] = 'UTF8'
+    conn = psycopg2.connect(**config)
     cursor = conn.cursor()
     
     # Buscar um cliente para alterar
