@@ -391,7 +391,7 @@ def main():
     print("\nEste script demonstra:")
     print("  1. Alteração de dados nos bancos originais (PostgreSQL, MongoDB, Neo4j)")
     print("  2. Verificação de que o Redis está desatualizado")
-    print("  3. Uso do front-end para sincronizar/atualizar bases (não feito por aqui)")
+    print("  3. Uso do front-end para sincronizar/atualizar bases")
     print("  4. Consulta dos dados atualizados via front-end")
     
     input("\nPressione ENTER para começar a demonstração...")

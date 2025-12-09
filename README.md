@@ -82,23 +82,7 @@ Este script:
 
 **Importante**: Após executar este script, execute a sincronização na API (`POST /api/sync_data`) para atualizar o Redis com os novos dados.
 
-### 6. Testar os bancos de dados
-
-Para verificar se tudo está funcionando corretamente:
-
-```bash
-python test_databases.py
-```
-
-Este script irá:
-- Testar conexões com todos os 4 bancos
-- Verificar se os dados foram populados corretamente
-- Mostrar estatísticas de cada banco
-- Validar integridade referencial no PostgreSQL
-- Verificar consistência entre os bancos (mesmo ID/CPF)
-- Exibir resumo dos testes
-
-### 7. Demonstração de Atualização (Para Apresentação)
+### 6. Demonstração de Atualização (Para Apresentação)
 
 Dois scripts disponíveis para demonstrar o fluxo de atualização:
 
@@ -117,9 +101,9 @@ python demo_atualizacao.py
 Este script demonstra:
 - Alteração de dados nos bancos originais (PostgreSQL, MongoDB, Neo4j)
 - Verificação de que o Redis está desatualizado após mudanças
-- Sincronização via API (limpa e recria dados no Redis)
-- Verificação de que o Redis foi atualizado corretamente
-- Consulta dos dados atualizados via API
+- **A sincronização é feita pelo front-end** usando o botão "Sincronizar/Atualizar Bases"
+- Verificação de que o Redis foi atualizado (via front-end)
+- Consulta dos dados atualizados no front-end
 
 **Fluxo da demonstração:**
 1. Altera nome, cidade e email de um cliente no PostgreSQL
@@ -127,23 +111,8 @@ Este script demonstra:
 3. Atualiza interesses no MongoDB
 4. Adiciona novos relacionamentos de amizade no Neo4j
 5. Mostra que o Redis ainda tem dados antigos
-6. Chama a API para sincronizar (`POST /api/sync_data`)
-7. Verifica que o Redis foi atualizado com os novos dados
-8. Consulta via API para mostrar que tudo funciona
-
-#### Opção 2: Demonstração Rápida
-
-Script não-interativo para demonstração rápida:
-
-```bash
-# Certifique-se de que a API está rodando primeiro
-python app.py
-
-# Execute a demonstração rápida
-python demo_rapida.py
-```
-
-Executa todas as alterações e sincronização automaticamente, ideal para mostrar rapidamente o funcionamento.
+6. No front-end, clique em **"Sincronizar/Atualizar Bases"** para limpar/recriar dados no Redis
+7. Verifique no front-end que os dados foram atualizados
 
 ### 8. Executar a API REST
 
@@ -164,10 +133,10 @@ A API estará disponível em:
 
 **Rotas da API:**
 - `POST /api/sync_data` - Sincroniza e consolida dados no Redis
-- `GET /api/clientes` - Lista todos os clientes (do Redis)
-- `GET /api/clientes/amigos` - Clientes e seus amigos (do Redis)
-- `GET /api/clientes/compras` - Clientes e compras (do Redis)
-- `GET /api/recomendacoes` - Recomendações personalizadas (do Redis)
+- `GET /api/clientes` - Lista todos os clientes do Redis
+- `GET /api/clientes/amigos` - Clientes e seus amigos do Redis
+- `GET /api/clientes/compras` - Clientes e compras do Redis
+- `GET /api/recomendacoes` - Recomendações personalizadas do Redis
 
 **Fluxo de uso:**
 1. Acesse http://localhost:8000 no navegador
@@ -214,8 +183,8 @@ A API estará disponível em:
 
 ```
 ┌─────────────┐     ┌─────────────┐     ┌─────────────┐
-│ PostgreSQL  │     │  MongoDB    │     │   Neo4j      │
-│ (Relacional)│     │ (Documentos)│     │   (Grafos)   │
+│ PostgreSQL  │     │  MongoDB    │     │    Neo4j    │
+│ (Relacional)│     │ (Documentos)│     │   (Grafos)  │
 └──────┬──────┘     └──────┬──────┘     └──────┬──────┘
        │                   │                   │
        └───────────────────┼───────────────────┘
@@ -227,7 +196,7 @@ A API estará disponível em:
                            │
                     ┌──────▼──────┐
                     │    Redis    │
-                    │ (Consolidado)│
+                    │(Consolidado)│
                     └──────┬──────┘
                            │
                     ┌──────▼──────┐
