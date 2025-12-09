@@ -122,7 +122,14 @@ async function carregarClientes() {
                         <td>${cliente.email}</td>
                         <td><span class="badge badge-info">${cliente.num_compras}</span></td>
                         <td><span class="badge badge-primary">${cliente.num_amigos}</span></td>
-                        <td><span class="badge badge-success">${cliente.num_interesses}</span></td>
+                        <td>
+                            <div class="interesses-list">
+                                ${cliente.interesses && cliente.interesses.length
+                                    ? cliente.interesses.map(interesse => `<span class="badge badge-success">${interesse}</span>`).join(' ')
+                                    : '<span style="color: #6c757d;">Nenhum interesse cadastrado</span>'
+                                }
+                            </div>
+                        </td>
                     </tr>
                 `;
             });

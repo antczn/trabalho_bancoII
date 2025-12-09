@@ -315,6 +315,7 @@ async def get_clientes():
                 'cidade': dados_pessoais.get('cidade'),
                 'uf': dados_pessoais.get('uf'),
                 'email': dados_pessoais.get('email'),
+                'interesses': cliente_data.get('interesses', []),
                 'num_compras': len(cliente_data.get('compras', [])),
                 'num_amigos': len(cliente_data.get('amigos', [])),
                 'num_interesses': len(cliente_data.get('interesses', []))
